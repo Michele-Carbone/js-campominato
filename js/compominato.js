@@ -29,10 +29,101 @@ Quando la partita termina, comunichiamo all'utente il suo punteggio.
 */
 
 
+var bombsNumbers = [1, 2];
+var totalsNumbers = 5;
+var totalsBombs = 2;
+var possibilities = totalsNumbers - totalsBombs;
+
+
+while (bombsNumbers.length < totalsBombs) {
+    //generiamo un numero casuale da 1 a 100;
+    var randomNumber = getRandomNumber(1, totalsNumbers);
+    console.log('numero casuale: ', randomNumber);
+
+    //verificare se il numero generato è già presente nell Array BombsNumbers
+    if (!isInArray(randomNumber, bombsNumbers)) {
+        bombsNumbers.push(randomNumber);
+    }
+}
+
+
+var userNumbers = [];
+while (userNumbers.length < possibilities) {
+    //CHIEDO UN NUMERO ALL'UTENTE
+    var userChoice = getUserNumber(1, totalsNumbers);
+
+    //verifichiamo che il numero non sia nell' Array tra quelli già scelti dall'utente
+    if (isInArray(userChoice, userNumbers)) {
+        //se è presente
+        alert('Il numero è stato già scelto');
+    } else {
+        //se non è presente
+        if (isInArray(userChoice, bombsNumbers)) {
+            alert('Game over');
+        } else {
+            userNumbers.push(userChoice);
+        }
+    }
+    console.log(userNumbers);
+}
 
 
 
 
+
+
+
+/******** FUNCTION RANDOM NUMBER */
+/**
+ * / funzione che genera il numero rando tra il minimo e massimo
+ * @param {number} min 
+ * @param {number} max 
+ * @returns {number}
+ */
+// funzione che genera il numero rando
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+
+
+/******** FUNCTION INCLUDES */
+/**
+ * controlla che un dato elemento sia presente in un dato elemento
+ * @param {*} needle è l oggetto che stiamo cercando nell Array
+ * @param {*} arr 
+ * @returns {boolean} ci restituisce un vero o falso
+ */
+
+function isInArray(needle, arr) {
+    var found = false;
+    var i = 0;
+    while (!found && i < arr.length) {
+        if (needle === arr[i]) {
+            found = true;
+        }
+        i++
+    }
+    return found;
+}
+
+
+
+/** FUNCTION FOR USERNUMBER */
+function getUserNumber(min, max) {
+    //CHIEDO UN NUMERO ALL'UTENTE
+    var number;
+
+    do {
+        number = prompt('Inserisci un numero da ' + min + ' a ' + max);
+    }
+
+    //verifichiamo che l utente non abbia scritto qualcosa di diverso da quello chiesto
+    while (!number || isNaN(number) || number.trim() === '' || number < min || number > max);
+
+    return parseInt(number);
+}
 
 
 
