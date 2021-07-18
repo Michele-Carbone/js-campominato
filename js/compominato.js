@@ -29,9 +29,9 @@ Quando la partita termina, comunichiamo all'utente il suo punteggio.
 */
 
 
-var bombsNumbers = [1, 2];
-var totalsNumbers = 5;
-var totalsBombs = 2;
+var bombsNumbers = [];
+var totalsNumbers = 100;
+var totalsBombs = 16;
 var possibilities = totalsNumbers - totalsBombs;
 
 
@@ -48,18 +48,21 @@ while (bombsNumbers.length < totalsBombs) {
 
 
 var userNumbers = [];
-while (userNumbers.length < possibilities) {
+var userGameover = false;
+
+while (!userGameover && userNumbers.length < possibilities) {
     //CHIEDO UN NUMERO ALL'UTENTE
     var userChoice = getUserNumber(1, totalsNumbers);
 
     //verifichiamo che il numero non sia nell' Array tra quelli già scelti dall'utente
     if (isInArray(userChoice, userNumbers)) {
         //se è presente
-        alert('Il numero è stato già scelto');
+        alert('Il numero inserito è già stato scelto');
     } else {
         //se non è presente
         if (isInArray(userChoice, bombsNumbers)) {
-            alert('Game over');
+            userGameover = true;
+
         } else {
             userNumbers.push(userChoice);
         }
@@ -68,6 +71,11 @@ while (userNumbers.length < possibilities) {
 }
 
 
+if (userGameover) {
+    alert('Hai perso! Hai totalizzato ' + userNumbers.length);
+} else {
+    alert('Hai Vinto!! Totalizzando un punteggio pari a ' + userNumbers.length);
+}
 
 
 
